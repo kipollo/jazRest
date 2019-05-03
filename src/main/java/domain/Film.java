@@ -6,6 +6,7 @@ public class Film {
 private String name;
 private int id;
 private List<Comment> comments;
+private int comcounter=0;
 
 public int getId() {
 	return id;
@@ -24,6 +25,13 @@ public List<Comment> getComments(){
 }
 public void setComments(List<Comment> comments) {
 	this.comments = comments;
+}
+
+public int getComcounter() {
+	return comcounter;
+}
+public void setComcounter(int comcounter) {
+	this.comcounter=comcounter;
 }
 
 }

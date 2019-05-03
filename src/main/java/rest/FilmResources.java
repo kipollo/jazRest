@@ -60,6 +60,21 @@ public class FilmResources {
 		Film result = db.get(id);
 		if(result==null)
 			return Response.status(404).build();
+		db.delete(result);
+	return Response.ok().build();	
+	}
+	
+	
+	@DELETE // komentarza o id filmu o filmId
+	@Path("{filmId}/comments/{id}")
+	public Response deleteComment (@PathParam("id")int id,@PathParam("filmId")int filmId) {
+		Film result = db.get(filmId);
+		List<Comment> comments =new ArrayList<Comment>();
+			comments=result.getComments();
+		comments.remove(id);
+		result.setComments(comments);
+		if(result==null)
+			return Response.status(404).build();
 		db.update(result);
 	return Response.ok().build();	
 	}
@@ -73,6 +88,8 @@ public class FilmResources {
 			return Response.status(404).build();
 		if(result.getComments()==null)
 			result.setComments(new ArrayList<Comment>());
+		comment.setId(result.getComcounter());
+		result.setComcounter(result.getComcounter()+1);
 		result.getComments().add(comment);
 		return Response.ok().build();
 	}
@@ -98,7 +115,7 @@ public class FilmResources {
 		
 		if(result==null)
 			return 0;
-		ArrayList<Comment>coms= new ArrayList<Comment>();
+		List<Comment>coms=result.getComments();
 		float score=0;
 		for(Comment c:coms) {
 			score=score+c.getScore();
